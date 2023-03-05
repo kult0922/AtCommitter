@@ -39,7 +39,7 @@ def get_latest_ac_submissions(user: str, contest: str) -> list[Submission]:
   
   return latest_ac_submissions
 
-def commit(submissions: list[Submission], contest: str, extension: str, submission_time_commit: bool):
+def commit(submissions: list[Submission], contest: str, extension: str):
   code_dir = 'codes/'
   contest_dir = os.path.join(code_dir, contest)
   os.makedirs(contest_dir, exist_ok=True)
@@ -51,19 +51,16 @@ def commit(submissions: list[Submission], contest: str, extension: str, submissi
 
   # staging
   os.chdir(code_dir)
-  os.system('git add .')
+  os.system('git add {}'.format(contest))
   # commit
-  if (submission_time_commit):
-    os.system('git commit -m "{}" --date="{}"'.format(contest, submission.fixtime))
-  else:
-    os.system('git commit -m {}'.format(contest))
+  os.system('git commit -m {}'.format(contest))
   # push
   os.system('git push origin head')
 
 def main():
   conf = load_conf()
   latest_ac_submissions = get_latest_ac_submissions(conf['user'], conf['contest'])
-  commit(latest_ac_submissions, conf['contest'], conf['extension'], conf['submission_time_commit'])
+  commit(latest_ac_submissions, conf['contest'], conf['extension'])
 
 if __name__ == '__main__':
   main()
