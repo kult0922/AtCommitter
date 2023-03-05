@@ -24,7 +24,7 @@ git remote add origin (your reopsitory)
 
 3. Run after contest and sync code with Github
 ```
-Python3 abc290
+Python3 main.py abc290
 ```
 
 ## Environment
