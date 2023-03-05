@@ -1,4 +1,4 @@
-from attr import dataclass
+from dataclasses import dataclass
 import requests
 import re
 from html.parser import HTMLParser
