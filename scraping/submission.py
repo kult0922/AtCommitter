@@ -1,9 +1,17 @@
+from attr import dataclass
 import requests
 import re
 from html.parser import HTMLParser
 
+@dataclass
+class Submission:
+  code: str
+  problem: str
+  status: str
+  fixtime: str
+
 class SubmissionCodeParser(HTMLParser):
-  def __init__(self, contest):
+  def __init__(self, contest: str):
     super().__init__()
     self.contest = contest
     self.parse_submission_code = False
@@ -41,14 +49,10 @@ class SubmissionCodeParser(HTMLParser):
       self.fixtime = data
       self.parse_fixtime = False
 
-def getSubmissionCode(submission_number: str, contest) -> tuple[str, str]:
+def get_ac_submission(submission_number: str, contest: str) -> Submission:
   url = 'https://atcoder.jp/contests/{}/submissions/{}'.format(contest, submission_number)
   content = requests.get(url).text
   parser = SubmissionCodeParser(contest)
   parser.feed(content)
 
-  return parser.submission_code, parser.problem, parser.status, parser.fixtime
-
-
-if __name__ == '__main__':
-  getSubmissionCode('39210748')
+  return Submission(parser.submission_code, parser.problem, parser.status, parser.fixtime)
