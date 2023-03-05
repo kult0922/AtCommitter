@@ -23,6 +23,7 @@ def get_latest_ac_submissions(user: str, contest: str) -> list[Submission]:
   # {key: [Submission, Submission, Submission, ...], key: [Submission, Submission, Submission, ...], ...}
   submission_per_problems = {}
   for ac_submission in ac_submissions:
+    print(ac_submission.fixtime)
     if (ac_submission.problem in submission_per_problems):
       submission_per_problems[ac_submission.problem].append(Submission(ac_submission.code, ac_submission.problem, ac_submission.status, ac_submission.fixtime))
     else:
@@ -38,7 +39,7 @@ def get_latest_ac_submissions(user: str, contest: str) -> list[Submission]:
   
   return latest_ac_submissions
 
-def commit(submissions: list[Submission], contest: str, extension: str):
+def commit(submissions: list[Submission], contest: str, extension: str, submission_time_commit: bool):
   code_dir = 'codes/'
   contest_dir = os.path.join(code_dir, contest)
   os.makedirs(contest_dir, exist_ok=True)
@@ -48,16 +49,21 @@ def commit(submissions: list[Submission], contest: str, extension: str):
     f = open(os.path.join(contest_dir, file_name), 'w')
     f.write(code)
 
-  # commit and push
+  # staging
   os.chdir(code_dir)
   os.system('git add .')
-  os.system('git commit -m {}'.format(contest))
+  # commit
+  if (submission_time_commit):
+    os.system('git commit -m "{}" --date="{}"'.format(contest, submission.fixtime))
+  else:
+    os.system('git commit -m {}'.format(contest))
+  # push
   os.system('git push origin head')
 
 def main():
   conf = load_conf()
   latest_ac_submissions = get_latest_ac_submissions(conf['user'], conf['contest'])
-  commit(latest_ac_submissions, conf['contest'], conf['extension'])
+  commit(latest_ac_submissions, conf['contest'], conf['extension'], conf['submission_time_commit'])
 
 if __name__ == '__main__':
   main()

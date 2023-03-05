@@ -15,9 +15,11 @@ git remote add origin (your reopsitory)
 ``` conf.json
 {
   "user": "Kurt_",
-  "extension": "cpp"
+  "extension": "cpp",
+  "submittion_time_commit": false
 }
 ```
+If submittion_time_commit is true, the date and time of the commit will be the date of submission.
 
 3. Run after contest and sync code with Github
 ```
