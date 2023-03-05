@@ -1,5 +1,4 @@
 # AtCommitter
-![GitHub](https://img.shields.io/github/license/kult0922/AtCommitter)
 
 ## How to use
 1. Create GitHub repository for Atcoder submission codes
