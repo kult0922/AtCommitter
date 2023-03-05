@@ -28,3 +28,9 @@ If submittion_time_commit is true, the date and time of the commit will be the d
 ```
 Python3 abc290
 ```
+
+## Environment
+python v3.7~
+```
+pip install requests
+```
