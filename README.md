@@ -1,6 +1,8 @@
 # AtCommitter
 [![GitHub](https://img.shields.io/github/license/kult0922/AtCommitter.svg)](https://img.shields.io/github/license/kult0922/AtCommitter)
 
+AtCommitter is a tool to sync submitted code on Atcoder to your GitHub repository
+
 ## How to use
 1. Create GitHub repository for Atcoder submission codes
 
